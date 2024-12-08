@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template for EventBridge Ruleearthshine-s3-object-created
+Resources:
+  Rule97e27d7f:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: earthshine-s3-object-created
+      EventPattern: >-
+        {"source":["aws.s3"],"detail-type":["AWS API Call via
+        CloudTrail"],"detail":{"eventSource":["s3.amazonaws.com"],"eventName":["PutObject"],"requestParameters":{"bucketName":["earthshine-s3-bucket-1"]}}}
+      State: ENABLED
+      EventBusName: default
+      Targets:
+        - Id: Idf9c88642-c46e-4b35-9f5d-2beb4db256d6
+          Arn:
+            Fn::Sub: >-
+              arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:earthshine-s3-event-handler
+Parameters: {}
